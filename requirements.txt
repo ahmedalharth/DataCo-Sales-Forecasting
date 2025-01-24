@@ -6,7 +6,7 @@ streamlit
 pandas
 plotly
 Pillow
-xgboost
+lightgbm
 ipython
 openpyxl
 imblearn
