@@ -6,11 +6,20 @@ import lightgbm as lgb
 from sklearn.preprocessing import  LabelEncoder  , StandardScaler
 
 
+numerical_col = [
+    'order_item_discount_rate',
+    'order_item_product_price',
+    'order_item_quantity'
+]
+categorical_col = [
+    'type', 'delivery_status', 'customer_country', 
+    'customer_segment', 'market', 'shipping_mode'
+]
 
 
 # Define the label encoder function
 def lable_encoder(df):
-    for col in cat:  # Ensure 'cat' is passed or globally defined
+    for col in categorical_col:  # Ensure 'cat' is passed or globally defined
         le = LabelEncoder()
         df[col] = le.fit_transform(df[col])
     return df
@@ -29,24 +38,12 @@ pipeline = load_pipeline()
 st.title("LightGBM Prediction App")
 st.write("Enter input features to get predictions using the LightGBM model.")
 
-# Define input fields for features
-feature1 = st.selectbox("Feature1 (Categorical)", options=['A', 'B', 'C'])
-feature2 = st.number_input("Feature2 (Numerical)", value=1.0)
-
-# Create input DataFrame
-input_data = pd.DataFrame({'feature1': [feature1], 'feature2': [feature2]})
-
-# Prediction button
-if st.button("Predict"):
-    # Make predictions
-    prediction = pipeline.predict(input_data)
-    predicted_class = prediction[0]
-    
-    # Display prediction
-    st.write(f"Predicted Class: {predicted_class}")
 
 
 
+
+# Application
+########################################################################################################################
 # Streamlit App
 st.title("Order Prediction App")
 st.write("Provide details about the order to predict outcomes.")
@@ -118,3 +115,4 @@ if uploaded_file is not None:
         st.write(predictions)
     except Exception as e:
         st.error(f"An error occurred: {e}")
+########################################################################################################################
