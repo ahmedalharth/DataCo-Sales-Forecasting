@@ -5,7 +5,7 @@ import pandas as pd
 # Load the saved pipeline
 @st.cache_resource
 def load_pipeline():
-    with open('lgb_pipeline.pkl', 'rb') as f:
+    with open('Pipeline/lgb_pipeline.pkl', 'rb') as f:
         return pickle.load(f)
 
 # Load the pipeline
