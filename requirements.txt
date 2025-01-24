@@ -1,0 +1,12 @@
+scikit-learn
+numpy
+pingouin
+scipy
+seaborn
+streamlit
+pandas
+plotly
+Pillow
+xgboost
+ipython
+openpyxl
