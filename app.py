@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 
 # Load the saved pipeline
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_pipeline():
     with open('lgb_pipeline.pkl', 'rb') as f:
         return pickle.load(f)
