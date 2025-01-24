@@ -2,9 +2,22 @@ import streamlit as st
 import pickle
 import pandas as pd
 import imblearn
-from sklearn.preprocessing import  LabelEncoder  
+import lightgbm as lgb
+from sklearn.preprocessing import  LabelEncoder  , StandardScaler
 
-from sklearn.preprocessing import LabelEncoder
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Define the label encoder function
 def lable_encoder(df):
