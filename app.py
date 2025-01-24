@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import imblearn
 
 # Load the saved pipeline
 @st.cache_resource
