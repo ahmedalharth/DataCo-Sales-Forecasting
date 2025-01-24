@@ -1,6 +1,5 @@
 scikit-learn
 numpy
-pingouin
 scipy
 seaborn
 streamlit
@@ -10,3 +9,4 @@ Pillow
 xgboost
 ipython
 openpyxl
+imblearn
