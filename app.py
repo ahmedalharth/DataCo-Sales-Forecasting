@@ -2,6 +2,17 @@ import streamlit as st
 import pickle
 import pandas as pd
 import imblearn
+from sklearn.preprocessing import  LabelEncoder  
+
+from sklearn.preprocessing import LabelEncoder
+
+# Define the label encoder function
+def lable_encoder(df):
+    for col in cat:  # Ensure 'cat' is passed or globally defined
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col])
+    return df
+
 
 # Load the saved pipeline
 @st.cache_resource
