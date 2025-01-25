@@ -102,71 +102,42 @@ You can either:
 """)
 
 
-# if st.button("🔍 Show Example Data"):
-#     example_data = pd.DataFrame({
-#         "type": ["DEBIT"],
-#         "delivery_status": ["On time"],
-#         "customer_country": ["EE. UU."],
-#         "customer_segment": ["Consumer"],
-#         "market": ["LATAM"],
-#         "shipping_mode": ["Standard Class"],
-#         "order_item_discount_rate": [0.1],
-#         "order_item_product_price": [137.91],
-#         "order_item_quantity": [2],
-#         "Month_order_date_(dateorders)": [6],
-#         "Year_order_date_(dateorders)": [2016],
-#         "DelayOrdered": [-1],
-#         "DiscountPerProduct": [65.68],
-#         "DenefitPerProduct": [21.73],
-#         "TotalDiscountPerProduct": [306.49],
-#         "MaxDiscountPerOrder": [20.35],
-#         "product_name_mean": [200.53]
-#     })
-#     st.dataframe(example_data)
 
 
-# st.markdown("### ✏️ Edit Data for Prediction")
-# editable_data = st.data_editor(example_data, use_container_width=True)
-# if st.button("🔮 Predict from Edited Data"):
-#     # Add prediction logic here
-#     st.write("Prediction results for the edited data.")
-
-
-
-# data_df = pd.DataFrame(
+data_df = pd.DataFrame(
     
-#     {
-#         "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
-#         "sales": [
+    {
+        "widgets": [st.selectbox(), "st.number_input", "st.text_area", "st.button"],
+        "sales": [
 
-#             [0, 4, 26, 80, 100, 40],
-#             [80, 20, 80, 35, 40, 100],
-#             [10, 20, 80, 80, 70, 0],
-#             [10, 100, 20, 100, 30, 100],
-#         ],
-#     }
-# )
+            [0, 4, 26, 80, 100, 40],
+            [80, 20, 80, 35, 40, 100],
+            [10, 20, 80, 80, 70, 0],
+            [10, 100, 20, 100, 30, 100],
+        ],
+    }
+)
 
-# st.data_editor(
-#     data_df,
-#     column_config={
-#         "widgets": st.column_config.Column(
-#             "Streamlit Widgets",
-#             help="Streamlit **widget** commands 🎈",
-#             width="medium",
-#             required=True,
-#         ),
-#         "sales": st.column_config.AreaChartColumn(
-#             "Sales (last 6 months)",
-#             width="medium",
-#             help="The sales volume in the last 6 months",
-#             y_min=0,
-#             y_max=100,
-#          ),
-#     },
-#     hide_index=True,
-#     num_rows="dynamic",
-# )
+st.data_editor(
+    data_df,
+    column_config={
+        "widgets": st.column_config.Column(
+            "Streamlit Widgets",
+            help="Streamlit **widget** commands 🎈",
+            width="medium",
+            required=True,
+        ),
+        "sales": st.column_config.AreaChartColumn(
+            "Sales (last 6 months)",
+            width="medium",
+            help="The sales volume in the last 6 months",
+            y_min=0,
+            y_max=100,
+         ),
+    },
+    hide_index=True,
+    num_rows="dynamic",
+)
 
 # Placeholder for user-defined DataFrame
 if "user_df" not in st.session_state:
@@ -309,7 +280,7 @@ discount_per_product = st.sidebar.slider(
     max_value=150.00,
     value=65.68,
     step=0.1,
-    help="The maximum discount applied to the product. Range: 2.82 to 150.00."
+    help= "The maximum discount applied to the product. Range: 2.82 to 150.00."
 )
 
 benefit_per_product = st.sidebar.slider(
