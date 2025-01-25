@@ -120,6 +120,51 @@ st.data_editor(
     num_rows="dynamic",
 )
 
+
+# Sidebar Input Form for Categorical Features with Descriptions
+type_ = st.sidebar.selectbox(
+    "Type",
+    ["DEBIT", "CREDIT", "CASH", "OTHER"],
+    index=0,
+    help="Select the payment type. Most common: DEBIT."
+)
+
+delivery_status = st.sidebar.selectbox(
+    "Delivery Status",
+    ["Late delivery", "On time", "Early delivery", "Pending"],
+    index=0,
+    help="Select the delivery status of the order. Most common: Late delivery."
+)
+
+customer_country = st.sidebar.selectbox(
+    "Customer Country",
+    ["EE. UU.", "Other"],
+    index=0,
+    help="Select the customer's country. Most common: EE. UU."
+)
+
+customer_segment = st.sidebar.selectbox(
+    "Customer Segment",
+    ["Consumer", "Corporate", "Home Office"],
+    index=0,
+    help="Select the customer segment. Most common: Consumer."
+)
+
+market = st.sidebar.selectbox(
+    "Market",
+    ["LATAM", "EMEA", "APAC", "USCA", "Other"],
+    index=0,
+    help="Select the market region. Most common: LATAM."
+)
+
+shipping_mode = st.sidebar.selectbox(
+    "Shipping Mode",
+    ["Standard Class", "First Class", "Second Class", "Other"],
+    index=0,
+    help="Select the shipping mode. Most common: Standard Class."
+)
+
+
 # Feature input sections
 with st.expander("Customer Information", expanded=True):
     customer_country = st.text_input("Customer Country", value="USA")
