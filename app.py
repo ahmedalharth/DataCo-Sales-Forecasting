@@ -131,40 +131,42 @@ if st.button("🔮 Predict from Edited Data"):
     # Add prediction logic here
     st.write("Prediction results for the edited data.")
 
-data_df = pd.DataFrame(
+
+
+# data_df = pd.DataFrame(
     
-    {
-        "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
-        "sales": [
+#     {
+#         "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
+#         "sales": [
 
-            [0, 4, 26, 80, 100, 40],
-            [80, 20, 80, 35, 40, 100],
-            [10, 20, 80, 80, 70, 0],
-            [10, 100, 20, 100, 30, 100],
-        ],
-    }
-)
+#             [0, 4, 26, 80, 100, 40],
+#             [80, 20, 80, 35, 40, 100],
+#             [10, 20, 80, 80, 70, 0],
+#             [10, 100, 20, 100, 30, 100],
+#         ],
+#     }
+# )
 
-st.data_editor(
-    data_df,
-    column_config={
-        "widgets": st.column_config.Column(
-            "Streamlit Widgets",
-            help="Streamlit **widget** commands 🎈",
-            width="medium",
-            required=True,
-        ),
-        "sales": st.column_config.AreaChartColumn(
-            "Sales (last 6 months)",
-            width="medium",
-            help="The sales volume in the last 6 months",
-            y_min=0,
-            y_max=100,
-         ),
-    },
-    hide_index=True,
-    num_rows="dynamic",
-)
+# st.data_editor(
+#     data_df,
+#     column_config={
+#         "widgets": st.column_config.Column(
+#             "Streamlit Widgets",
+#             help="Streamlit **widget** commands 🎈",
+#             width="medium",
+#             required=True,
+#         ),
+#         "sales": st.column_config.AreaChartColumn(
+#             "Sales (last 6 months)",
+#             width="medium",
+#             help="The sales volume in the last 6 months",
+#             y_min=0,
+#             y_max=100,
+#          ),
+#     },
+#     hide_index=True,
+#     num_rows="dynamic",
+# )
 
 # Placeholder for user-defined DataFrame
 if "user_df" not in st.session_state:
@@ -174,22 +176,151 @@ if "user_df" not in st.session_state:
 st.sidebar.header("Add New Row to the DataFrame")
 
 # Categorical inputs
-type_ = st.sidebar.selectbox("Type", ["DEBIT", "CREDIT", "TRANSFER", "PAYMENT"])
-delivery_status = st.sidebar.selectbox("Delivery Status", ["Late delivery", "On time delivery", "Early delivery", "Unknown"])
-customer_country = st.sidebar.selectbox("Customer Country", ["EE. UU.", "Other"])
-customer_segment = st.sidebar.selectbox("Customer Segment", ["Consumer", "Corporate", "Home Office"])
-market = st.sidebar.selectbox("Market", ["LATAM", "EUROPE", "US"])
-shipping_mode = st.sidebar.selectbox("Shipping Mode", ["Standard Class", "Second Class", "First Class", "Same Day"])
+# Sidebar Input Form for Categorical Features without Percentages
+st.sidebar.header("Categorical Features")
+
+type_ = st.sidebar.selectbox(
+    "Transaction Type",
+    ["DEBIT", "TRANSFER", "PAYMENT", "CASH"],
+    index=0,
+    help="Select the transaction type. Most common: DEBIT."
+)
+
+shipping_mode = st.sidebar.selectbox(
+    "Shipping Mode",
+    ["Standard Class", "Second Class", "First Class"],
+    index=0,
+    help="Select the shipping mode. Most common: Standard Class."
+)
+
+delivery_status = st.sidebar.selectbox(
+    "Delivery Status",
+    [
+        "Late delivery",
+        "Advance shipping",
+        "Shipping on time",
+        "Shipping canceled"
+    ],
+    index=0,
+    help="Select the delivery status. Most common: Late delivery."
+)
+
+market = st.sidebar.selectbox(
+    "Market",
+    [
+        "LATAM",
+        "Europe",                                                  
+        "Pacific Asia",
+        "USCA",
+        "Africa"
+    ],
+    index=0,
+    help="Select the delivery status. Most common: Late delivery."
+)
+
+customer_country = st.sidebar.selectbox(
+    "Customer Country",
+    [
+        "EE. UU.",
+        "Puerto Rico",                                                  
+       
+    ],
+    index=0,
+    help="Select the Customer Country. Most common: EE. UU."
+)
+
+customer_segment =  st.sidebar.selectbox(
+    "Customer Segment",
+    [
+        "Consumer",
+        "Corporate",  
+        "Home Office"                                                
+       
+    ],
+    index=0,
+    help="Select the Customer Segment. Most common: Consumer"
+)
+
+
 
 # Numerical inputs
-order_item_discount_rate = st.sidebar.slider("Order Item Discount Rate", 0.0, 0.25, 0.10, 0.01)
-order_item_product_price = st.sidebar.slider("Order Item Product Price", 9.99, 599.99, 137.91, 0.01)
-order_item_quantity = st.sidebar.number_input("Order Item Quantity", 1, 5, 2, 1)
-month_order_date = st.sidebar.slider("Month of Order Date", 1, 12, 6, 1)
-year_order_date = st.sidebar.slider("Year of Order Date", 2015, 2018, 2016, 1)
-delay_ordered = st.sidebar.slider("Delay in Order (days)", -4, 2, -1, 1)
-discount_per_product = st.sidebar.slider("Discount Per Product", 2.82, 150.00, 65.68, 0.1)
-benefit_per_product = st.sidebar.slider("Benefit Per Product", -17.33, 147.38, 21.73, 0.1)
+# Sidebar Input Form for Numerical Features
+st.sidebar.header("Numerical Features")
+
+order_item_discount_rate = st.sidebar.slider(
+    "Order Item Discount Rate",
+    min_value=0.0,
+    max_value=0.25,
+    value=0.10,
+    step=0.01,
+    help="The discount rate applied to the order item (0.0 to 0.25)."
+)
+
+order_item_product_price = st.sidebar.slider(
+    "Order Item Product Price",
+    min_value=9.99,
+    max_value=599.99,
+    value=137.91,
+    step=0.01,
+    help="The price of the product (in USD). Range: $9.99 to $599.99."
+)
+
+order_item_quantity = st.sidebar.number_input(
+    "Order Item Quantity",
+    min_value=1,
+    max_value=5,
+    value=2,
+    step=1,
+    help="The quantity of the product ordered. Range: 1 to 5."
+)
+
+month_order_date = st.sidebar.slider(
+    "Month of Order Date",
+    min_value=1,
+    max_value=12,
+    value=6,
+    step=1,
+    help="The month when the order was placed (1 for January, 12 for December)."
+)
+
+year_order_date = st.sidebar.slider(
+    "Year of Order Date",
+    min_value=2015,
+    max_value=2018,
+    value=2016,
+    step=1,
+    help="The year when the order was placed (2015 to 2018)."
+)
+
+delay_ordered = st.sidebar.slider(
+    "Delay in Order (days)",
+    
+    min_value=-4,
+    max_value=2,
+    value=-1,
+    step=1,
+    help="The delay in shipping (in days). Negative means early delivery."
+)
+
+discount_per_product = st.sidebar.slider(
+    "Discount Per Product",
+
+    min_value= 0,
+    max_value=150.00,
+    value=65.68,
+    step=0.1,
+    help="The maximum discount applied to the product. Range: 2.82 to 150.00."
+)
+
+benefit_per_product = st.sidebar.slider(
+    "Benefit Per Product",
+    min_value= -17.33,
+    max_value= 147.38,
+    value=21.73,
+    step=0.1,
+    help="The average benefit (profit) per product. Can be negative for losses."
+)
+
 total_discount_per_product = st.sidebar.slider("Total Discount Per Product", 0.64, 3594.21, 306.49, 1.0)
 max_discount_per_order = st.sidebar.slider("Max Discount Per Order", 0.0, 150.0, 20.35, 0.1)
 product_name_mean = st.sidebar.slider("Product Name Mean", 11.29, 532.58, 200.53, 1.0)
