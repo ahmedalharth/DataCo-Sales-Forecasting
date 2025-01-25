@@ -122,7 +122,7 @@ st.data_editor(
 
 # Placeholder for user-defined DataFrame
 if "user_df" not in st.session_state:
-    st.session_state.user_df = pd.DataFrame(columns=cat_features + num_features)
+    st.session_state.user_df = pd.DataFrame(columns=categorical_col + numerical_col)
 
 # Sidebar input forms
 st.sidebar.header("Add New Row to the DataFrame")
