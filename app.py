@@ -101,13 +101,6 @@ You can either:
 - Upload a CSV file for batch predictions.
 """)
 
-st.markdown("### ✏️ Edit Data for Prediction")
-editable_data = st.data_editor(example_data, use_container_width=True)
-if st.button("🔮 Predict from Edited Data"):
-    # Add prediction logic here
-    st.write("Prediction results for the edited data.")
-
-
 
 if st.button("🔍 Show Example Data"):
     example_data = pd.DataFrame({
@@ -132,7 +125,11 @@ if st.button("🔍 Show Example Data"):
     st.dataframe(example_data)
 
 
-
+st.markdown("### ✏️ Edit Data for Prediction")
+editable_data = st.data_editor(example_data, use_container_width=True)
+if st.button("🔮 Predict from Edited Data"):
+    # Add prediction logic here
+    st.write("Prediction results for the edited data.")
 
 data_df = pd.DataFrame(
     
