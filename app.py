@@ -17,6 +17,42 @@ categorical_col = [
 ]
 
 
+
+
+
+def feature_engineering(df):
+
+    """
+    Perform feature engineering for a dataset (training or test).
+    This includes calculating delay, discount, and benefit-related features.
+    """
+
+    # Delay in orders
+    df['DelayOrdered'] = df['days_for_shipment_(scheduled)'] - df['days_for_shipping_(real)']
+    df.drop(['days_for_shipment_(scheduled)', 'days_for_shipping_(real)'], axis=1, inplace=True)
+
+    # Discount per product
+    discount_map = dict(df.groupby('product_name')['order_item_discount'].max())
+    df['DiscountPerProduct'] = df['product_name'].map(discount_map)
+
+    # Benefit per product
+    benefit_map = dict(df.groupby('product_name')['benefit_per_order'].mean())
+    df['DenefitPerProduct'] = df['product_name'].map(benefit_map)
+
+    # Total discount variance per product
+    discount_var_map = dict(df.groupby('product_name')['order_item_discount'].var())
+    df['TotalDiscountPerProduct'] = df['product_name'].map(discount_var_map)
+
+    # Max discount per order
+    max_discount_map = dict(df.groupby('order_item_id')['order_item_discount'].max())
+    df['MaxDiscountPerOrder'] = df['order_item_id'].map(max_discount_map)
+
+    # Drop original columns that are no longer needed
+    df.drop(['order_item_discount', 'benefit_per_order', 'order_item_profit_ratio'], axis=1, inplace=True)
+    
+    return df
+
+
 # Define the label encoder function
 def lable_encoder(df):
     for col in categorical_col:  # Ensure 'cat' is passed or globally defined
@@ -47,6 +83,28 @@ st.write("Enter input features to get predictions using the LightGBM model.")
 # Streamlit App
 st.title("Order Prediction App")
 st.write("Provide details about the order to predict outcomes.")
+
+
+
+data_df = pd.DataFrame(
+    {
+        "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
+    }
+)
+
+st.data_editor(
+    data_df,
+    column_config={
+        "widgets": st.column_config.Column(
+            "Streamlit Widgets",
+            help="Streamlit **widget** commands 🎈",
+            width="medium",
+            required=True,
+        )
+    },
+    hide_index=True,
+    num_rows="dynamic",
+)
 
 # Feature input sections
 with st.expander("Customer Information", expanded=True):
