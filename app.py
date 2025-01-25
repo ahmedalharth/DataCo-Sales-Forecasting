@@ -323,6 +323,32 @@ if st.sidebar.button("Add Row"):
 st.subheader("User Input DataFrame")
 st.dataframe(st.session_state.user_df)
 
+
+# Predict using the saved pipeline and model
+if st.button("Predict"):
+    # Load your saved preprocessing pipeline and model
+    # pipeline = load('preprocessing_pipeline.pkl')  # Replace with your pipeline
+    # model = load('model.pkl')  # Replace with your LightGBM model
+
+    # Example pipeline application (uncomment when pipeline is defined)
+    input_data = pipeline.transform(st.session_state.user_df)
+
+    # Example prediction (replace with your model.predict)
+    predictions = pipeline.predict(input_data)
+    
+    # Dummy output for demonstration
+    # predictions = np.random.random(len(st.session_state.user_df))
+    st.subheader("Predictions")
+    st.write(predictions)
+# # Prediction
+
+# if st.button("Predict"):
+#     try:
+#         prediction = pipeline.predict(input_data)
+#         st.success(f"The predicted outcome is: {prediction[0]}")
+#     except Exception as e:
+#         st.error(f"An error occurred: {e}")
+
 # # Feature input sections
 # with st.expander("Customer Information", expanded=True):
 #     customer_country = st.text_input("Customer Country", value="USA")
@@ -347,36 +373,36 @@ st.dataframe(st.session_state.user_df)
 #     product_name_mean = st.number_input("Product Name Mean", min_value=0.0, value=0.0)
 
 # Combine inputs into a DataFrame
-input_data = pd.DataFrame({
-    'type': [type_],
-    'delivery_status': [delivery_status],
-    'customer_country': [customer_country],
-    'customer_segment': [customer_segment],
-    'market': [market],
-    'shipping_mode': [shipping_mode],
-    'order_item_discount_rate': [order_item_discount_rate],
-    'order_item_product_price': [order_item_product_price],
-    'order_item_quantity': [order_item_quantity],
-    'Month_order_date_(dateorders)': [month_order_date],
-    'Year_order_date_(dateorders)': [year_order_date],
-    'DiscountPerProduct': [discount_per_product],
-    'DenefitPerProduct': [benefit_per_product],
-    'TotalDiscountPerProduct': [total_discount_per_product],
-    'MaxDiscountPerOrder': [max_discount_per_order],
-    'product_name_mean': [product_name_mean]
-})
+# input_data = pd.DataFrame({
+#     'type': [type_],
+#     'delivery_status': [delivery_status],
+#     'customer_country': [customer_country],
+#     'customer_segment': [customer_segment],
+#     'market': [market],
+#     'shipping_mode': [shipping_mode],
+#     'order_item_discount_rate': [order_item_discount_rate],
+#     'order_item_product_price': [order_item_product_price],
+#     'order_item_quantity': [order_item_quantity],
+#     'Month_order_date_(dateorders)': [month_order_date],
+#     'Year_order_date_(dateorders)': [year_order_date],
+#     'DiscountPerProduct': [discount_per_product],
+#     'DenefitPerProduct': [benefit_per_product],
+#     'TotalDiscountPerProduct': [total_discount_per_product],
+#     'MaxDiscountPerOrder': [max_discount_per_order],
+#     'product_name_mean': [product_name_mean]
+# })
 
-# Display user inputs
-st.subheader("Input Data")
-st.write(input_data)
+# # Display user inputs
+# st.subheader("Input Data")
+# st.write(input_data)
 
-# Prediction
-if st.button("Predict"):
-    try:
-        prediction = pipeline.predict(input_data)
-        st.success(f"The predicted outcome is: {prediction[0]}")
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+# # Prediction
+# if st.button("Predict"):
+#     try:
+#         prediction = pipeline.predict(input_data)
+#         st.success(f"The predicted outcome is: {prediction[0]}")
+#     except Exception as e:
+#         st.error(f"An error occurred: {e}")
 
 # Batch Predictions
 st.subheader("Batch Processing")
