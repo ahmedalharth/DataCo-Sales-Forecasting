@@ -120,97 +120,107 @@ st.data_editor(
     num_rows="dynamic",
 )
 
+# Placeholder for user-defined DataFrame
+if "user_df" not in st.session_state:
+    st.session_state.user_df = pd.DataFrame(columns=cat_features + num_features)
 
-# Sidebar Input Form for Categorical Features with Descriptions
-type_ = st.sidebar.selectbox(
-    "Type",
-    ["DEBIT", "CREDIT", "CASH", "OTHER"],
-    index=0,
-    help="Select the payment type. Most common: DEBIT."
-)
+# Sidebar input forms
+st.sidebar.header("Add New Row to the DataFrame")
 
-delivery_status = st.sidebar.selectbox(
-    "Delivery Status",
-    ["Late delivery", "On time", "Early delivery", "Pending"],
-    index=0,
-    help="Select the delivery status of the order. Most common: Late delivery."
-)
+# Categorical inputs
+type_ = st.sidebar.selectbox("Type", ["DEBIT", "CREDIT", "TRANSFER", "PAYMENT"])
+delivery_status = st.sidebar.selectbox("Delivery Status", ["Late delivery", "On time delivery", "Early delivery", "Unknown"])
+customer_country = st.sidebar.selectbox("Customer Country", ["EE. UU.", "Other"])
+customer_segment = st.sidebar.selectbox("Customer Segment", ["Consumer", "Corporate", "Home Office"])
+market = st.sidebar.selectbox("Market", ["LATAM", "EUROPE", "US"])
+shipping_mode = st.sidebar.selectbox("Shipping Mode", ["Standard Class", "Second Class", "First Class", "Same Day"])
 
-customer_country = st.sidebar.selectbox(
-    "Customer Country",
-    ["EE. UU.", "Other"],
-    index=0,
-    help="Select the customer's country. Most common: EE. UU."
-)
+# Numerical inputs
+order_item_discount_rate = st.sidebar.slider("Order Item Discount Rate", 0.0, 0.25, 0.10, 0.01)
+order_item_product_price = st.sidebar.slider("Order Item Product Price", 9.99, 599.99, 137.91, 0.01)
+order_item_quantity = st.sidebar.number_input("Order Item Quantity", 1, 5, 2, 1)
+month_order_date = st.sidebar.slider("Month of Order Date", 1, 12, 6, 1)
+year_order_date = st.sidebar.slider("Year of Order Date", 2015, 2018, 2016, 1)
+delay_ordered = st.sidebar.slider("Delay in Order (days)", -4, 2, -1, 1)
+discount_per_product = st.sidebar.slider("Discount Per Product", 2.82, 150.00, 65.68, 0.1)
+benefit_per_product = st.sidebar.slider("Benefit Per Product", -17.33, 147.38, 21.73, 0.1)
+total_discount_per_product = st.sidebar.slider("Total Discount Per Product", 0.64, 3594.21, 306.49, 1.0)
+max_discount_per_order = st.sidebar.slider("Max Discount Per Order", 0.0, 150.0, 20.35, 0.1)
+product_name_mean = st.sidebar.slider("Product Name Mean", 11.29, 532.58, 200.53, 1.0)
 
-customer_segment = st.sidebar.selectbox(
-    "Customer Segment",
-    ["Consumer", "Corporate", "Home Office"],
-    index=0,
-    help="Select the customer segment. Most common: Consumer."
-)
+# Add data to DataFrame
+if st.sidebar.button("Add Row"):
+    new_row = {
+        "type": type_,
+        "delivery_status": delivery_status,
+        "customer_country": customer_country,
+        "customer_segment": customer_segment,
+        "market": market,
+        "shipping_mode": shipping_mode,
+        "order_item_discount_rate": order_item_discount_rate,
+        "order_item_product_price": order_item_product_price,
+        "order_item_quantity": order_item_quantity,
+        "Month_order_date_(dateorders)": month_order_date,
+        "Year_order_date_(dateorders)": year_order_date,
+        "DelayOrdered": delay_ordered,
+        "DiscountPerProduct": discount_per_product,
+        "DenefitPerProduct": benefit_per_product,
+        "TotalDiscountPerProduct": total_discount_per_product,
+        "MaxDiscountPerOrder": max_discount_per_order,
+        "product_name_mean": product_name_mean,
+    }
+    st.session_state.user_df = pd.concat([st.session_state.user_df, pd.DataFrame([new_row])], ignore_index=True)
 
-market = st.sidebar.selectbox(
-    "Market",
-    ["LATAM", "EMEA", "APAC", "USCA", "Other"],
-    index=0,
-    help="Select the market region. Most common: LATAM."
-)
+# Display current DataFrame
+st.subheader("User Input DataFrame")
+st.dataframe(st.session_state.user_df)
 
-shipping_mode = st.sidebar.selectbox(
-    "Shipping Mode",
-    ["Standard Class", "First Class", "Second Class", "Other"],
-    index=0,
-    help="Select the shipping mode. Most common: Standard Class."
-)
+# # Feature input sections
+# with st.expander("Customer Information", expanded=True):
+#     customer_country = st.text_input("Customer Country", value="USA")
+#     customer_segment = st.selectbox("Customer Segment", options=['Consumer', 'Corporate', 'Home Office'])
 
+# with st.expander("Order Information", expanded=True):
+#     type_ = st.selectbox("Product Type", options=['Type1', 'Type2', 'Type3'])
+#     delivery_status = st.selectbox("Delivery Status", options=['Delivered', 'Pending', 'In Transit'])
+#     market = st.selectbox("Market", options=['US', 'EU', 'APAC', 'MEA', 'LATAM'])
+#     shipping_mode = st.selectbox("Shipping Mode", options=['First Class', 'Second Class', 'Standard Class'])
+#     month_order_date = st.slider("Month of Order Date", min_value=1, max_value=12, step=1)
+#     year_order_date = st.slider("Year of Order Date", min_value=2000, max_value=2030, step=1)
 
-# Feature input sections
-with st.expander("Customer Information", expanded=True):
-    customer_country = st.text_input("Customer Country", value="USA")
-    customer_segment = st.selectbox("Customer Segment", options=['Consumer', 'Corporate', 'Home Office'])
+# with st.expander("Product and Discount Information", expanded=True):
+#     order_item_quantity = st.number_input("Order Item Quantity", min_value=1, value=1)
+#     order_item_discount_rate = st.slider("Order Item Discount Rate", min_value=0.0, max_value=1.0, step=0.01)
+#     order_item_product_price = st.number_input("Order Item Product Price", min_value=0.0, value=100.0)
+#     discount_per_product = st.number_input("Discount Per Product", min_value=0.0, value=0.0)
+#     benefit_per_product = st.number_input("Benefit Per Product", min_value=0.0, value=0.0)
+#     total_discount_per_product = st.number_input("Total Discount Per Product", min_value=0.0, value=0.0)
+#     max_discount_per_order = st.number_input("Max Discount Per Order", min_value=0.0, value=0.0)
+#     product_name_mean = st.number_input("Product Name Mean", min_value=0.0, value=0.0)
 
-with st.expander("Order Information", expanded=True):
-    type_ = st.selectbox("Product Type", options=['Type1', 'Type2', 'Type3'])
-    delivery_status = st.selectbox("Delivery Status", options=['Delivered', 'Pending', 'In Transit'])
-    market = st.selectbox("Market", options=['US', 'EU', 'APAC', 'MEA', 'LATAM'])
-    shipping_mode = st.selectbox("Shipping Mode", options=['First Class', 'Second Class', 'Standard Class'])
-    month_order_date = st.slider("Month of Order Date", min_value=1, max_value=12, step=1)
-    year_order_date = st.slider("Year of Order Date", min_value=2000, max_value=2030, step=1)
+# # Combine inputs into a DataFrame
+# input_data = pd.DataFrame({
+#     'type': [type_],
+#     'delivery_status': [delivery_status],
+#     'customer_country': [customer_country],
+#     'customer_segment': [customer_segment],
+#     'market': [market],
+#     'shipping_mode': [shipping_mode],
+#     'order_item_discount_rate': [order_item_discount_rate],
+#     'order_item_product_price': [order_item_product_price],
+#     'order_item_quantity': [order_item_quantity],
+#     'Month_order_date_(dateorders)': [month_order_date],
+#     'Year_order_date_(dateorders)': [year_order_date],
+#     'DiscountPerProduct': [discount_per_product],
+#     'DenefitPerProduct': [benefit_per_product],
+#     'TotalDiscountPerProduct': [total_discount_per_product],
+#     'MaxDiscountPerOrder': [max_discount_per_order],
+#     'product_name_mean': [product_name_mean]
+# })
 
-with st.expander("Product and Discount Information", expanded=True):
-    order_item_quantity = st.number_input("Order Item Quantity", min_value=1, value=1)
-    order_item_discount_rate = st.slider("Order Item Discount Rate", min_value=0.0, max_value=1.0, step=0.01)
-    order_item_product_price = st.number_input("Order Item Product Price", min_value=0.0, value=100.0)
-    discount_per_product = st.number_input("Discount Per Product", min_value=0.0, value=0.0)
-    benefit_per_product = st.number_input("Benefit Per Product", min_value=0.0, value=0.0)
-    total_discount_per_product = st.number_input("Total Discount Per Product", min_value=0.0, value=0.0)
-    max_discount_per_order = st.number_input("Max Discount Per Order", min_value=0.0, value=0.0)
-    product_name_mean = st.number_input("Product Name Mean", min_value=0.0, value=0.0)
-
-# Combine inputs into a DataFrame
-input_data = pd.DataFrame({
-    'type': [type_],
-    'delivery_status': [delivery_status],
-    'customer_country': [customer_country],
-    'customer_segment': [customer_segment],
-    'market': [market],
-    'shipping_mode': [shipping_mode],
-    'order_item_discount_rate': [order_item_discount_rate],
-    'order_item_product_price': [order_item_product_price],
-    'order_item_quantity': [order_item_quantity],
-    'Month_order_date_(dateorders)': [month_order_date],
-    'Year_order_date_(dateorders)': [year_order_date],
-    'DiscountPerProduct': [discount_per_product],
-    'DenefitPerProduct': [benefit_per_product],
-    'TotalDiscountPerProduct': [total_discount_per_product],
-    'MaxDiscountPerOrder': [max_discount_per_order],
-    'product_name_mean': [product_name_mean]
-})
-
-# Display user inputs
-st.subheader("Input Data")
-st.write(input_data)
+# # Display user inputs
+# st.subheader("Input Data")
+# st.write(input_data)
 
 # Prediction
 if st.button("Predict"):
