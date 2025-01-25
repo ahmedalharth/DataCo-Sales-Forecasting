@@ -93,6 +93,16 @@ Use this app to:
 """)
 
 
+st.header("📝 Input Your Data")
+st.markdown("""
+Please provide the necessary details below for sales prediction. 
+You can either:
+- Enter individual data points in the sidebar.
+- Upload a CSV file for batch predictions.
+""")
+
+
+
 data_df = pd.DataFrame(
     
     {
