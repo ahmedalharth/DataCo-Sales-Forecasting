@@ -140,8 +140,8 @@ You can either:
 # )
 
 # # Placeholder for user-defined DataFrame
-# if "user_df" not in st.session_state:
-#     st.session_state.user_df = pd.DataFrame(columns=categorical_col + numerical_col)
+if "user_df" not in st.session_state:
+    st.session_state.user_df = pd.DataFrame(columns=categorical_col + numerical_col)
 
 # Sidebar input forms
 st.sidebar.header("Add New Row to the DataFrame")
