@@ -81,8 +81,17 @@ st.write("Enter input features to get predictions using the LightGBM model.")
 # Application
 ########################################################################################################################
 # Streamlit App
-st.title("Order Prediction App")
-st.write("Provide details about the order to predict outcomes.")
+st.title("📊 Sales Forecasting Application")
+st.subheader("Predict future sales trends and optimize your business!")
+st.markdown("""
+Welcome to the Sales Forecasting Application. This tool leverages advanced machine learning models 
+to provide sales predictions based on your inputs. 
+Use this app to:
+- Forecast sales for specific regions, products, or customer types.
+- Analyze sales trends and factors driving performance.
+- Optimize inventory and reduce waste.
+""")
+ß
 
 
 data_df = pd.DataFrame(
