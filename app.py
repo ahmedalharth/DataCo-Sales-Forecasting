@@ -276,7 +276,7 @@ delay_ordered = st.sidebar.slider(
 discount_per_product = st.sidebar.slider(
     "Discount Per Product",
 
-    min_value= 0,
+    min_value= 0.0,
     max_value=150.00,
     value=65.68,
     step=0.1,
