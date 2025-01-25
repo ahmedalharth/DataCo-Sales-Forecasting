@@ -107,7 +107,7 @@ You can either:
 data_df = pd.DataFrame(
     
     {
-        "widgets": [st.selectbox(), "st.number_input", "st.text_area", "st.button"],
+        "widgets": [st.selectbox(['a','b','c']), "st.number_input", "st.text_area", "st.button"],
         "sales": [
 
             [0, 4, 26, 80, 100, 40],
