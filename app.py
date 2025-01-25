@@ -107,7 +107,7 @@ You can either:
 # data_df = pd.DataFrame(
     
 #     {
-#         "widgets": [st.selectbox(['a','b','c']), "st.number_input", "st.text_area", "st.button"],
+#         "widgets": [st.selectbox(['a','b',]), "st.number_input", "st.text_area", "st.button"],
 #         "sales": [
 
 #             [0, 4, 26, 80, 100, 40],
@@ -139,9 +139,9 @@ You can either:
 #     num_rows="dynamic",
 # )
 
-# Placeholder for user-defined DataFrame
-if "user_df" not in st.session_state:
-    st.session_state.user_df = pd.DataFrame(columns=categorical_col + numerical_col)
+# # Placeholder for user-defined DataFrame
+# if "user_df" not in st.session_state:
+#     st.session_state.user_df = pd.DataFrame(columns=categorical_col + numerical_col)
 
 # Sidebar input forms
 st.sidebar.header("Add New Row to the DataFrame")
