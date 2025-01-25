@@ -91,7 +91,6 @@ Use this app to:
 - Analyze sales trends and factors driving performance.
 - Optimize inventory and reduce waste.
 """)
-ß
 
 
 data_df = pd.DataFrame(
