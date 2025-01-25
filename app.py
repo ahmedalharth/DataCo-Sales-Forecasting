@@ -331,10 +331,10 @@ if st.button("Predict"):
     # model = load('model.pkl')  # Replace with your LightGBM model
 
     # Example pipeline application (uncomment when pipeline is defined)
-    input_data = pipeline.transform(st.session_state.user_df)
+    # input_data = pipeline.transform(st.session_state.user_df)
 
     # Example prediction (replace with your model.predict)
-    predictions = pipeline.predict(input_data)
+    predictions = pipeline.predict(st.session_state.user_df)
     
     # Dummy output for demonstration
     # predictions = np.random.random(len(st.session_state.user_df))
