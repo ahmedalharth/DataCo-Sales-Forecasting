@@ -89,6 +89,13 @@ data_df = pd.DataFrame(
     
     {
         "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
+        "sales": [
+
+            [0, 4, 26, 80, 100, 40],
+            [80, 20, 80, 35, 40, 100],
+            [10, 20, 80, 80, 70, 0],
+            [10, 100, 20, 100, 30, 100],
+        ],
     }
 )
 
@@ -100,7 +107,14 @@ st.data_editor(
             help="Streamlit **widget** commands 🎈",
             width="medium",
             required=True,
-        )
+        ),
+        "sales": st.column_config.AreaChartColumn(
+            "Sales (last 6 months)",
+            width="medium",
+            help="The sales volume in the last 6 months",
+            y_min=0,
+            y_max=100,
+         ),
     },
     hide_index=True,
     num_rows="dynamic",
