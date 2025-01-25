@@ -101,6 +101,37 @@ You can either:
 - Upload a CSV file for batch predictions.
 """)
 
+st.markdown("### ✏️ Edit Data for Prediction")
+editable_data = st.data_editor(example_data, use_container_width=True)
+if st.button("🔮 Predict from Edited Data"):
+    # Add prediction logic here
+    st.write("Prediction results for the edited data.")
+
+
+
+if st.button("🔍 Show Example Data"):
+    example_data = pd.DataFrame({
+        "type": ["DEBIT"],
+        "delivery_status": ["On time"],
+        "customer_country": ["EE. UU."],
+        "customer_segment": ["Consumer"],
+        "market": ["LATAM"],
+        "shipping_mode": ["Standard Class"],
+        "order_item_discount_rate": [0.1],
+        "order_item_product_price": [137.91],
+        "order_item_quantity": [2],
+        "Month_order_date_(dateorders)": [6],
+        "Year_order_date_(dateorders)": [2016],
+        "DelayOrdered": [-1],
+        "DiscountPerProduct": [65.68],
+        "DenefitPerProduct": [21.73],
+        "TotalDiscountPerProduct": [306.49],
+        "MaxDiscountPerOrder": [20.35],
+        "product_name_mean": [200.53]
+    })
+    st.dataframe(example_data)
+
+
 
 
 data_df = pd.DataFrame(
