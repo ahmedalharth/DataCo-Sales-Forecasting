@@ -85,8 +85,8 @@ st.title("Order Prediction App")
 st.write("Provide details about the order to predict outcomes.")
 
 
-
 data_df = pd.DataFrame(
+    
     {
         "widgets": ["st.selectbox", "st.number_input", "st.text_area", "st.button"],
     }
